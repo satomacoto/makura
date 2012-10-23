@@ -110,49 +110,38 @@ $(document).ready(function () {
   };
 
   $.getJSON("makura.json", function (json) {
-    /*
-        // shuffle json
-        data = $(json).get().sort(function() {
-            return Math.round(Math.random()) - 0.5
-        });
-        */
     data = json;
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 20; i++) {
       $("#container").prepend(getItem()).masonry('reload');
     }
+
+    var processScroll = true;
+    $(window).scroll(function() {
+      if (processScroll  && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+        processScroll = false;
+        var items = new Array();
+        for (var i=0; i < 10; i++) {
+          items.push(getItem());
+        }
+        $("#container").append(items).masonry('reload');
+        processScroll = true;
+      }
+    });
+
   });
 
   $("#header").hover(
-
-  function () {
-    $(this).css("background-color", "#eee");
-  },
-
-  function () {
-    $(this).css("background-color", "white");
-  }).click(function () {
+    function () {
+      $(this).css("background-color", "#eee");
+    },
+    function () {
+      $(this).css("background-color", "white");
+    }
+  ).click(function () {
     $("#container").prepend(getItem()).masonry('reload');
     return false;
   });
-  setInterval(function () {
-    $("#container").prepend(getItem()).masonry('reload');
-    //$("#container").masonry('remove', $(".item :last")).masonry('reload');
-  }, 12000);
 
-  /*
-    var processScroll = true;
-    $(window).scroll(function() {
-        if (processScroll  && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
-            processScroll = false;
-            var hoge = new Array();
-            for (var i=0; i<20; i++) {
-              hoge.push(getItem());
-            }
-            $("#container").append(hoge).masonry('reload');
-            processScroll = true;
-        }
-    });
-*/
 });
     </script>
   </body>
