@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>Makura Aozora Bunko</title>
+    <script src="jquery-1.8.2.min.js"></script>
+    <script src="jquery.masonry.min.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
+    <style>
+a {
+  text-decoration:none;
+}
+.item {
+  width: 320px;
+  margin: 5px;
+  padding: 4px;
+  float: left;
+  box-shadow: 0 1px 2px rgba(25, 25, 25, 0.4);
+  background-color: white;
+  line-height: 1.3em;
+}
+body {
+  font-family:"DFPKyoKaSho-W3", "HGP教科書体", serif;
+  font-weight: 300;
+}
+#header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 100;
+  font-family:"Helvetica neue", Helvetica, sans-serif;
+  padding: 0.5em;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+  z-index: 99;
+}
+#header a {
+  color: #333;
+}
+.headerContainer {
+  margin: 0 auto;
+  width: 1020px;
+}
+#container {
+  margin: 3em auto;
+  width: 1020px;
+}
+    </style>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35690326-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  <body bgcolor="#f7f7f7">
+    <div id="header">
+      <div class="headerContainer"> <a href="#" id="title">Makura Aozora Bunko</a>
+
+      </div>
+    </div>
+    <div id="container"></div>
+    <script>
+$(document).ready(function () {
+
+  var data = null;
+
+  var colors = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"];
+
+  $('#container').masonry({
+    // options
+    itemSelector: '.item',
+    isAnimated: true,
+    animationOptions: {
+      duration: 500,
+      easing: 'linear',
+      queue: false
+    },
+    columnWidth: 340
+  });
+
+  var getItem = function () {
+    var item = data[Math.floor(Math.random() * data.length)];
+    var fontsize = Math.sqrt(120 / item.text.length);
+    var color = colors[Math.floor(Math.random() * colors.length)];
+    var a = $("<a></a>")
+      .attr("href", "http://www.aozora.gr.jp/cards/" + item.jinbutsu + "/card" + item.sakuhin + ".html")
+      .attr("target", "_blank")
+      .text(item.text)
+      .css("color", color);
+    var div = $("<div class=item></div>")
+      .css("font-size", fontsize + "em")
+      .append($(a));
+    return div;
+  };
+
+  $.getJSON("makura.json", function (json) {
+    /*
+        // shuffle json
+        data = $(json).get().sort(function() {
+            return Math.round(Math.random()) - 0.5
+        });
+        */
+    data = json;
+    for (var i = 0; i < 20; i++) {
+      $("#container").prepend(getItem()).masonry('reload');
+    }
+  });
+
+  $("#header").hover(
+
+  function () {
+    $(this).css("background-color", "#eee");
+  },
+
+  function () {
+    $(this).css("background-color", "white");
+  }).click(function () {
+    $("#container").prepend(getItem()).masonry('reload');
+    return false;
+  });
+  setInterval(function () {
+    $("#container").prepend(getItem()).masonry('reload');
+    //$("#container").masonry('remove', $(".item :last")).masonry('reload');
+  }, 12000);
+
+    var processScroll = true;
+    $(window).scroll(function() {
+        if (processScroll  && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+            processScroll = false;
+            var hoge = new Array();
+            for (var i=0; i < 20; i++) {
+              hoge.push(getItem());
+            }
+            $("#container").append(hoge).masonry('reload');
+            processScroll = true;
+        }
+    });
+});
+    </script>
+  </body>
+
+</html>
