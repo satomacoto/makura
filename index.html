@@ -111,6 +111,7 @@ $(document).ready(function () {
 
   $.getJSON("makura.json", function (json) {
     data = json;
+
     for (var i = 0; i < 20; i++) {
       $("#container").prepend(getItem()).masonry('reload');
     }
@@ -127,7 +128,16 @@ $(document).ready(function () {
         processScroll = true;
       }
     });
+    
+    setInterval(function () {
+      $("#container").prepend(getItem()).masonry('reload');
+      //$("#container").masonry('remove', $(".item :last")).masonry('reload');
+    }, 12000);
 
+    $("#header").click(function () {
+      $("#container").prepend(getItem()).masonry('reload');
+      return false;
+    });
   });
 
   $("#header").hover(
@@ -137,10 +147,7 @@ $(document).ready(function () {
     function () {
       $(this).css("background-color", "white");
     }
-  ).click(function () {
-    $("#container").prepend(getItem()).masonry('reload');
-    return false;
-  });
+  )
 
 });
     </script>
