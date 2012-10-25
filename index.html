@@ -157,6 +157,11 @@ $(document).ready(function () {
       $("#container").prepend(getItem()).masonry('reload');
     }
 
+    var interval = setInterval(function () {
+      $("#container").prepend(getItem()).masonry('reload');
+      //$("#container").masonry('remove', $(".item :last")).masonry('reload');
+    }, 12000);
+
     var processScroll = true;
     $(window).scroll(function() {
       if (processScroll  && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
@@ -167,14 +172,11 @@ $(document).ready(function () {
         }
         $("#container").append(items).masonry('reload');
         processScroll = true;
+
+        clearInterval(interval);
       }
     });
     
-    setInterval(function () {
-      $("#container").prepend(getItem()).masonry('reload');
-      //$("#container").masonry('remove', $(".item :last")).masonry('reload');
-    }, 12000);
-
     $("#header").click(function () {
       $("#container").prepend(getItem()).masonry('reload');
       return false;
