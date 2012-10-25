@@ -99,7 +99,7 @@ $(document).ready(function () {
     var fontsize = Math.sqrt(120 / item.text.length);
     var color = colors[Math.floor(Math.random() * colors.length)];
     var a = $("<a></a>")
-      .attr("href", item.ebk)
+      .attr("href", "http://www.aozora.gr.jp/cards/" + item.jinbutsu + "/card" + item.sakuhin + ".html")
       .attr("target", "_blank")
       .text(item.text)
       .css("color", color);
@@ -110,11 +110,7 @@ $(document).ready(function () {
   };
 
   $.getJSON("makura.json", function (json) {
-    data = new Array();
-    for (var i = 0; i < json.length; i++) {
-      if (json[i].ebk != "")
-        data.push(json[i]);
-    }
+    data = json;
     for (var i = 0; i < 3; i++) {
       $("#container").prepend(getItem()).masonry('reload');
     }

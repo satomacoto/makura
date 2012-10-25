@@ -115,6 +115,11 @@ $(document).ready(function () {
     for (var i = 0; i < 20; i++) {
       $("#container").prepend(getItem()).masonry('reload');
     }
+    
+    $("#header").click(function () {
+      $("#container").prepend(getItem()).masonry('reload');
+      return false;
+    });
 
     var processScroll = true;
     $(window).scroll(function() {
@@ -138,10 +143,7 @@ $(document).ready(function () {
     function () {
       $(this).css("background-color", "white");
     }
-  ).click(function () {
-    $("#container").prepend(getItem()).masonry('reload');
-    return false;
-  });
+  );
 
 });
     </script>
