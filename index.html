@@ -50,6 +50,24 @@ body {
   margin: 3em auto;
   width: 1020px;
 }
+.icn {
+  margin-left:2px;
+}
+.icns {
+  position:absolute;
+  bottom:0;
+  right:0;
+  display:none;
+  margin-right:8px;
+}
+.icn {
+  filter:alpha(opacity=20);
+  opacity:0.2;
+}
+.icn:hover {
+  filter:alpha(opacity=100);
+  opacity:1;
+}
     </style>
 
 <script type="text/javascript">
@@ -106,6 +124,29 @@ $(document).ready(function () {
     var div = $("<div class=item></div>")
       .css("font-size", fontsize + "em")
       .append($(a));
+
+    var tweet = $('<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(item.text) + '&hashtags=aozoramakura&url=' + encodeURIComponent("http://www.aozora.gr.jp/cards/" + item.jinbutsu + "/card" + item.sakuhin + ".html") + '" target="_blank" class="icn"><img src="twitter.png" width="20px" height="20px"></a>');
+    
+    var kobo_url = "http://rakuten.kobobooks.com/search/search.html?q=" + encodeURIComponent(item.info.title + " " + item.info.author.join(" "));
+    var kobo = $('<a href="' + kobo_url +'" target="_blank" class="icn"><img src="kobo.png" width="20px" height="20px"></a>');
+
+    var kindle_url = "http://www.amazon.co.jp/s/?url=search-alias%3Ddigital-text&field-keywords=" + encodeURIComponent(item.info.title + " " + item.info.author.join(" "));
+    var kindle = $('<a href="' + kindle_url +'" target="_blank" class="icn"><img src="kindle.png" width="20px" height="20px"></a>');
+    
+    var icns = $('<div class="icns" style=""/>')
+        .append(kobo)
+        .append(kindle)
+        .append(tweet);
+
+    div.hover(
+        function() {
+            $('.icns', this).show();
+        },
+        function() {
+            $('.icns', this).hide();
+        });
+    div.append(icns);
+
     return div;
   };
 
