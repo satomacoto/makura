@@ -99,7 +99,7 @@ $(document).ready(function () {
     var fontsize = Math.sqrt(120 / item.text.length);
     var color = colors[Math.floor(Math.random() * colors.length)];
     
-    var url = "http://rakuten.kobobooks.com/search/search.html?q=" + encodeURIComponent(item.info.title + " " + item.info.author.join(" "))
+    var url = "http://www.amazon.co.jp/s/?url=search-alias%3Ddigital-text&field-keywords=" + encodeURIComponent(item.info.title + " " + item.info.author.join(" "))
     var a = $("<a></a>")
       .attr("href", url)
       .attr("target", "_blank")
